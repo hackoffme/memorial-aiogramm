@@ -1,2 +1,4 @@
 aiogram
-environs
+requests
+aiogram_dialog
+emoji
