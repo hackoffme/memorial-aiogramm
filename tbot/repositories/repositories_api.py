@@ -1,4 +1,4 @@
-from typing import Dict, Optional
+from typing import Dict
 import requests
 import json
 from tbot.config import config
@@ -29,12 +29,12 @@ def read_tag():
     return q
 
 
-def create_user(tg_id: int, tag_settings, area_settings):
+def create_user(tg_id: int):  # , tag_settings=, area_settings):
     # api/v1/tg_users/
-    m = {'tg_id': tg_id, 'tag_settings': tag_settings,
-         'area_settings': area_settings}
+    # m = {'tg_id': tg_id, 'tag_settings': tag_settings,
+    #      'area_settings': area_settings}
     q = requests.post(
-        f'{config.api_address}/api/v1/tg_users/', json=m)
+        f'{config.api_address}/api/v1/tg_users/', json={'tg_id': tg_id})
     return q
 
 
@@ -62,3 +62,15 @@ def read_random_post(tg_id: int):
     ret.update({'status': q.status_code})
     return ret
 
+def read_post_by_coordinates(tg_id: int, lat: float, lon: float):
+    # /api/v1/post/1/get_post_by_coordinages/
+    q = requests.get(f'{config.api_address}/api/v1/post/{tg_id}/get_post_by_coordinates/', json={'lat': lat, 'lon':lon})
+    ret = json.loads(q.text)
+    ret.update({'status': q.status_code})
+    return ret
+
+def read_post_by_saved_coordinates(tg_id: int):
+    q = requests.get(f'{config.api_address}/api/v1/post/{tg_id}/get_post_by_saved_coordinates/', )
+    ret = json.loads(q.text)
+    ret.update({'status': q.status_code})
+    return ret
