@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - 'redis_data:/bitnami/redis/data'
+  bot:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+volumes:
+  redis_data:
+    driver: local

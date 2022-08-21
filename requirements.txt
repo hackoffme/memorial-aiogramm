@@ -1,4 +1,5 @@
 aiogram
 requests
 aiogram_dialog
-emoji
+environs
+aioredis

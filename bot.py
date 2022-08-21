@@ -1,13 +1,22 @@
 import asyncio
+import aioredis
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.contrib.fsm_storage import redis
+# from aiogram.contrib.fsm.storage.redis import DefaultKeyBuilder, RedisStorage
+# from aiogram.dispatcher.
 from aiogram_dialog import DialogRegistry
+from aiogram_dialog.exceptions import UnknownIntent
 
 from tbot.config import config
 from tbot.dialog import start
 
+
 async def main():
-    storage = MemoryStorage()
+    if config.redis:
+        storage = redis.RedisStorage2(config.redis)
+    else:
+        storage = MemoryStorage()
     bot = Bot(token=config.token, parse_mode='HTML')
     dp = Dispatcher(bot, storage=storage)
 
@@ -16,8 +25,8 @@ async def main():
     registy.register(start.dialog)
     try:
         await dp.start_polling()
-        ...
     finally:
+        # await dp.storage.close()
         await bot.session.close()
 
 

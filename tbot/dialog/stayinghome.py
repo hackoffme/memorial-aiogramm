@@ -21,7 +21,7 @@ async def stayinghome(c: CallbackQuery | Message, button: Button, manager: Dialo
     await message.answer(post['title'])
     await message.answer(post['text'])
     manager.show_mode = ShowMode.SEND
-    await manager.update(manager.data)
+    # await manager.update(manager.data)
     await message.delete()
     await manager.switch_to(StartSG.stayinghome)
 
