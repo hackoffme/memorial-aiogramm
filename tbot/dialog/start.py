@@ -7,10 +7,11 @@ from aiogram_dialog.widgets.input import MessageInput
 
 from tbot.repositories import repositories_api
 from tbot.dialog.state import StartSG
-from tbot.dialog.stayinghome import stayinghome, clean_list_of_read_posts
+from tbot.dialog.stayinghome import stayinghome
 from tbot.dialog.wilkingaround import walkingaround, walkingaround_show_more
 from tbot.dialog.user_input import messange_input
 from tbot.dialog.settings import get_settings, settings_end
+from tbot.dialog.clean import clean_list_of_read_posts
 
 
 async def get_data(*args, **kwargs):
@@ -22,11 +23,12 @@ async def get_data(*args, **kwargs):
 
 async def start_dialog(_, manager: DialogManager, **kwarg):
     hi = repositories_api.get_hi()
-    await manager.event.answer(hi)
-    id = manager.event.from_id
+    id = manager.bg().user.id
+    await manager.bg().bot.send_message(chat_id=id, text = hi)
     user = repositories_api.read_user(id)
     if user.get('status') == 404:
         repositories_api.create_user(id)
+
 
 
 dialog = Dialog(

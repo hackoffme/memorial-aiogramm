@@ -3,6 +3,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 import json
 from tbot.config import config
+from tbot import models
 
 API_ADDRESS = config.api_address
 API_TOKEN = config.api_token

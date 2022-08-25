@@ -3,3 +3,4 @@ requests
 aiogram_dialog
 environs
 aioredis
+pydantic

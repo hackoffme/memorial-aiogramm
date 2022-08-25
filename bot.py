@@ -1,15 +1,12 @@
 import asyncio
-import aioredis
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.fsm_storage import redis
-# from aiogram.contrib.fsm.storage.redis import DefaultKeyBuilder, RedisStorage
-# from aiogram.dispatcher.
 from aiogram_dialog import DialogRegistry
-from aiogram_dialog.exceptions import UnknownIntent
 
 from tbot.config import config
 from tbot.dialog import start
+from tbot.handlers import register_all_handlers
 
 
 async def main():
@@ -19,10 +16,11 @@ async def main():
         storage = MemoryStorage()
     bot = Bot(token=config.token, parse_mode='HTML')
     dp = Dispatcher(bot, storage=storage)
-
+    register_all_handlers(dp)
     registy = DialogRegistry(dp)
     registy.register_start_handler(start.StartSG.start)
     registy.register(start.dialog)
+    bot['registry'] = registy
     try:
         await dp.start_polling()
     finally:
