@@ -1,7 +1,6 @@
 import asyncio
 from aiogram import Bot, Dispatcher
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from aiogram.contrib.fsm_storage import redis
+from aiogram.contrib.fsm_storage import redis, memory
 from aiogram_dialog import DialogRegistry
 from aiogram.types import ParseMode
 
@@ -14,7 +13,7 @@ async def main():
     if config.redis:
         storage = redis.RedisStorage2(config.redis)
     else:
-        storage = MemoryStorage()
+        storage = memory.MemoryStorage()
     bot = Bot(token=config.token, parse_mode=ParseMode.HTML)
     dp = Dispatcher(bot, storage=storage)
     register_all_handlers(dp)
