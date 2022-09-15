@@ -10,11 +10,10 @@ class TelegramBot:
     redis: str|None
     user_api: str
     pass_api: str
-    webhook_host: str
-    webhook_path: str
-    webapp_host: str
-    webapp_port: int
-    # postgre_url: str|None
+    webhook_host: str|None
+    webhook_path: str|None
+    webapp_host: str|None
+    webapp_port: int|None
 
 
 def load_config(path: str = None)->TelegramBot:
@@ -26,10 +25,10 @@ def load_config(path: str = None)->TelegramBot:
         redis = env.str("REDIS_URL", None),
         user_api = env.str("USER_API"),
         pass_api = env.str("PASS_API"),
-        webhook_host=env.str("WEBHOOK_HOST"),
-        webhook_path=env.str("WEBHOOK_PATH"),
-        webapp_host=env.str("WEBAPP_HOST"),
-        webapp_port=env.int("WEBAPP_PORT")
+        webhook_host=env.str("WEBHOOK_HOST", None),
+        webhook_path=env.str("WEBHOOK_PATH", None),
+        webapp_host=env.str("WEBAPP_HOST", None),
+        webapp_port=env.int("WEBAPP_PORT", None)
     )
 
 config = load_config('.env')
