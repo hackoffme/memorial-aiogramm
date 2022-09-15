@@ -3,6 +3,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.fsm_storage import redis
 from aiogram_dialog import DialogRegistry
+from aiogram.types import ParseMode
 
 from tbot.config import config
 from tbot.dialog import start
@@ -14,7 +15,7 @@ async def main():
         storage = redis.RedisStorage2(config.redis)
     else:
         storage = MemoryStorage()
-    bot = Bot(token=config.token, parse_mode='HTML')
+    bot = Bot(token=config.token, parse_mode=ParseMode.HTML)
     dp = Dispatcher(bot, storage=storage)
     register_all_handlers(dp)
     registy = DialogRegistry(dp)
@@ -33,3 +34,4 @@ if __name__ == "__main__":
         asyncio.run(main())
     except Exception as err:
         print(err)
+

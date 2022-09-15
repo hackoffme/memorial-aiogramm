@@ -26,7 +26,7 @@ async def start_dialog(_, manager: DialogManager, **kwarg):
     id = manager.bg().user.id
     await manager.bg().bot.send_message(chat_id=id, text = hi)
     user = repositories_api.read_user(id)
-    if user.get('status') == 404:
+    if user.status == 404:
         repositories_api.create_user(id)
 
 
@@ -71,10 +71,10 @@ dialog = Dialog(
     Window(
         Format("<b><i>Привет! это мои настройки. Выберите район поиска:</i></b>"),
         Group(Multiselect(
-            Jinja('✅ {{item["title"]}}'),
-            Jinja('❌ {{item["title"]}}'),
+            Jinja('✅ {{item.title}}'),
+            Jinja('❌ {{item.title}}'),
             id="area_settings",
-            item_id_getter=lambda x: x['slug'],
+            item_id_getter=lambda x: x.slug,
             items='area_settings'
         ),
             width=2
@@ -88,10 +88,10 @@ dialog = Dialog(
     Window(
         Format("<b><i>Выберите теги, которые вым интересны</i></b>"),
         Group(Multiselect(
-            Jinja('✅ {{item["title"]}}'),
-            Jinja('❌ {{item["title"]}}'),
+            Jinja('✅ {{item.title}}'),
+            Jinja('❌ {{item.title}}'),
             id="tag_settings",
-            item_id_getter=lambda x: x['slug'],
+            item_id_getter=lambda x: x.slug,
             items='tag_settings'
         ),
             width=2
