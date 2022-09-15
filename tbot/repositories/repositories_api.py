@@ -7,7 +7,6 @@ from tbot.config import config
 from tbot import models
 
 API_ADDRESS = config.api_address
-API_TOKEN = config.api_token
 USER_API = config.user_api
 PASS_API = config.pass_api
 HI = ''
