@@ -1,6 +1,6 @@
 from typing import List
 from pydantic import BaseModel
-
+from enum import Enum
 
 class Area(BaseModel):
     id: int
@@ -29,6 +29,7 @@ class Image(BaseModel):
 
 
 class Posts(BaseModel):
+    id: int | None
     title: str | None
     text: str | None
     lat: float | None
@@ -36,3 +37,11 @@ class Posts(BaseModel):
     slug: str | None
     status: int | None
     images_set: List[Image] | None
+    
+    
+class Vote(BaseModel):
+    count_up: int | None
+    count_down: int | None
+    status: int | None
+    
+    

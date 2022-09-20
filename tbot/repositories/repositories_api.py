@@ -21,7 +21,7 @@ def get_hi() -> str:
     for item in q:
         if item.get('name', None) == 'hi':
             return item.get('value', 'Привет')
-    return 'Привет дорогой друг'
+    return 'Привет дорогой друг' 
 
 
 def read_area() -> List[models.Area]:
@@ -96,5 +96,21 @@ def read_post_by_saved_coordinates(tg_id: int) -> models.Posts:
     q = requests.get(f'{config.api_address}/api/v1/post/{tg_id}/get_post_by_saved_coordinates/',
                      auth=HTTPBasicAuth(USER_API, PASS_API))
     ret = models.Posts.parse_raw(q.text)
+    ret.status = q.status_code
+    return ret
+
+
+def vote(tg_id: int, post_id:int, like: bool) -> models.Vote:
+    # api/v1/vote/
+    """
+    208 no change
+    201 like add
+    205 like delete
+    422 bad json
+    """
+    q = requests.post(f'{config.api_address}/api/v1/vote/', 
+                      json={'tg_user': tg_id, 'post':post_id, 'like':like},
+        auth=HTTPBasicAuth(USER_API, PASS_API))
+    ret = models.Vote.parse_raw(q.text)
     ret.status = q.status_code
     return ret

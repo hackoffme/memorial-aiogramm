@@ -2,9 +2,9 @@ from aiogram.types import Message, InputFile, MediaGroup, InputMediaPhoto
 from aiogram.utils.markdown import quote_html, html_decoration
 from aiogram.utils.exceptions import BadRequest
 from tbot import models
+from tbot.keyboards.like import get_keyboard
 async def send_post(m: Message, post: models.Posts):
     await m.answer(f'<u><b>{quote_html(post.title)} </b></u>\n {post.text}')
-    # await m.answer(post.text, protect_content=True)
     if post.images_set:
         group = MediaGroup()
         for item in post.images_set:
@@ -14,7 +14,7 @@ async def send_post(m: Message, post: models.Posts):
         except BadRequest as err:
             print(err)
 
-    await m.answer_location(longitude=post.lon, latitude=post.lat)
+    await m.answer_location(longitude=post.lon, latitude=post.lat, reply_markup=get_keyboard(post.id))
     
 
 
