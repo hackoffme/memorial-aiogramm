@@ -25,9 +25,10 @@ async def start_dialog(_, manager: DialogManager, **kwarg):
     hi = repositories_api.get_hi()
     id = manager.bg().user.id
     await manager.bg().bot.send_message(chat_id=id, text = hi)
-    user = repositories_api.read_user(id)
-    if user.status == 404:
-        repositories_api.create_user(id)
+    # user = repositories_api.read_user(id)
+    # if user.status == 404:
+    #     repositories_api.create_user(id)
+    repositories_api.create_user(id)
 
 
 
